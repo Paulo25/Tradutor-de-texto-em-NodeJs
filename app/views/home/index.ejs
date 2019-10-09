@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8"/>
+    <title>Tradutor</title>
+    <script
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(e){
+            $('#load').hide();
+            $(document).on('submit', 'form.submit-ajax', function (e) {
+                console.log("passou")
+                $('#bt-traduzir').attr('disabled');
+                $('#load').show();
+                e.stopPropagation();
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    data: $(this).serialize()
+                }).done(function (res) {
+                    $('#bt-traduzir').removeAttr('disabled');
+                    $('#load').hide();
+                    console.log(res);
+                    $('#ttt').html(res.texto);
+                    $('#tresult').html(res.traducao);
+                })
+            })
+
+        });
+    </script>
+</head>
+<body>
+
+<h1>Bem vindo ao tradutor - Cloud Translation API</h1>
+
+<div class="content">
+    <div class="title m-b-md">
+        <div id="wndDynamic" style="font-family:Tahoma;font-size:8pt;width: 500px; height: 200px;position:absolute;background-color:#ece9d8;">
+            <span id="wndTitle" style="width:100%; background-color: #0088ff;">Desenvolvido por: Paulo Vitor</span>
+            <br><br>
+            <form action="traduzir" method="post" id="translationForm" class="submit-ajax">
+                Texto para tradução:
+                <textarea name="texto" id="ttt" maxlength="100" rows="4" cols="33" required style="font-size: 8pt; font-family: Tahoma;vertical-align: text-top" ></textarea>
+
+                <br>
+                <hr>
+
+                De: <select id="tfrom" name="de" style="font-size: 8pt; font-family: Tahoma">
+                    <option value="detec_language">Detectar Linguagem</option>
+                    <% languages.forEach(function(language) { %>
+                        <option  value=" <%= language.code %>"><%= language.name %></option>
+                      <% }); %>
+                </select>
+
+                Para: <select id="tto" name="para" style="font-size: 8pt; font-family: Tahoma">
+                    <% languages.forEach(function (language) { %>
+                        <option value="<%=language.code%>" ><%=language.name%></option>
+                    <% }); %>
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <button id="bt-traduzir" type="submit" style="font-size: 8pt; font-family: Tahoma">Traduzir</button>
+                <span style="background: #ff0" id="load">Carregando a tradução...</span>
+
+                <br>
+                <hr>
+
+                Texto traduzido......:
+                <textarea id="tresult" rows="4" cols="33" style="font-size: 8pt; font-family: Tahoma;vertical-align: text-top" ></textarea>
+
+            </form>
+        </div>
+        <span id="" style="width:100%; background-color: #0088ff;">desenvolvido por: Paulo Vitor</span>
+    </div>
+
+</div>
+
+<footer >
+<h5 style="position: absolute;top: 272px; background: aqua">Trabalho de Inteligência Artificial - Docente Pedro Kislansky</h5>
+</footer>
+
+</body>
+</html>
+
