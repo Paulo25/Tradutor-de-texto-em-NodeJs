@@ -3,4 +3,5 @@ Aplicação de tradução de texto em vários idiomas com Nodejs, consumindo API
 
 
 OBSERVAÇÃO:
-Nessaçario utilizar npm install para bastar todas as depências do projeto.
+1º Nessaçario utilizar npm install para baixar todas as depências do projeto.
+2º Iniciar servidor com "app nodemon".
